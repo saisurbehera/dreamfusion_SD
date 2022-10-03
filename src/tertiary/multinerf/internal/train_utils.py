@@ -164,7 +164,11 @@ def orientation_loss(rays, model, ray_history, config):
     # Negate viewdirs to represent normalized vectors from point to camera.
     v = -1. * rays.viewdirs
     n_dot_v = (n * v[..., None, :]).sum(axis=-1)
-    loss = jnp.mean((w * jnp.minimum(0.0, n_dot_v)**2).sum(axis=-1))
+
+    loss = jnp.mean((w * jnp.minimum(0.0, n_dot_v)**2).sum(axis=-1)) 
+    # Adding a regulation loss mentioned in appendix. 
+    loss += (jnp.sum(w)**2 + 0.01)**0.5
+
     if i < model.num_levels - 1:
       total_loss += config.orientation_coarse_loss_mult * loss
     else:
