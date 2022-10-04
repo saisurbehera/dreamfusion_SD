@@ -351,6 +351,8 @@ class MLP(nn.Module):
   net_width: int = 128
   bottleneck_width: int = 128  # The width of the bottleneck vector.
   net_activation: Callable[..., Any] = nn.swish  # The activation function.
+  # We need to add shading hyperparameters
+  use_diffuse_color_step_max = 1000 + 1
 
   
 
@@ -389,6 +391,8 @@ class MLP(nn.Module):
   basis_shape: str = 'icosahedron'  # `octahedron` or `icosahedron`.
   basis_subdivisions: int = 2  # Tesselation count. 'octahedron' + 1 == eye(3).
 
+
+
   def setup(self):
     # Make sure that normals are computed if reflection direction is used.
     if self.use_reflections and not (self.enable_pred_normals or
@@ -417,7 +421,7 @@ class MLP(nn.Module):
                viewdirs=None,
                imageplane=None,
                glo_vec=None,
-               exposure=None):
+               exposure=None , use_diffuse_color_step = self.use_diffuse_color_step_max):
     """Evaluate the MLP.
 
     Args:
@@ -608,6 +612,8 @@ class MLP(nn.Module):
         # Combine specular and diffuse components and tone map to sRGB.
         rgb = jnp.clip(
             image.linear_to_srgb(specular_linear + diffuse_linear), 0.0, 1.0)
+
+        
 
       # Apply padding, mapping color to [-rgb_padding, 1+rgb_padding].
       rgb = rgb * (1 + 2 * self.rgb_padding) - self.rgb_padding

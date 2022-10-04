@@ -1,7 +1,13 @@
 DF_SD
 ==============================
 
-SD implementation of DreamFusion
+## SD implementation of DreamFusion
+
+Things which are done so far:
+- Architectural changes based on Apendix A2
+- Hyper Paramter regularized added
+    - Changed the gradiant to stop
+- 
 
 Project Organization
 ------------
