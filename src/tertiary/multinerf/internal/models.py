@@ -421,7 +421,8 @@ class MLP(nn.Module):
                viewdirs=None,
                imageplane=None,
                glo_vec=None,
-               exposure=None , use_diffuse_color_step = self.use_diffuse_color_step_max):
+               exposure=None , 
+               use_diffuse_color_step = self.use_diffuse_color_step_max):
     """Evaluate the MLP.
 
     Args:
@@ -439,6 +440,10 @@ class MLP(nn.Module):
         learned vignette mapping.
       glo_vec: [..., num_glo_features], The GLO vector for each ray.
       exposure: [..., 1], exposure value (shutter_speed * ISO) for each ray.
+
+
+      Added a diffussion color step to the MLP to control the amount of diffussion color
+      We have an condition where if this value is greater than the max we apply the process diffrently 
 
     Returns:
       rgb: jnp.ndarray(float32), with a shape of [..., num_rgb_channels].

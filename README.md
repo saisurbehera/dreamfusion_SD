@@ -3,11 +3,17 @@ DF_SD
 
 ## SD implementation of DreamFusion
 
+This code has several subparts. One of them is modification of the multinerf codebase with the modification mentioned in the paper. 
+
+The modifications are located [here](src/tertiary/multinerf/README.md)
+
 Things which are done so far:
-- Architectural changes based on Apendix A2
-- Hyper Paramter regularized added
-    - Changed the gradiant to stop
-- 
+- MIP NERF Modifications
+    - Architectural changes based on Apendix A2
+    - Hyper Paramter regularized added
+        - Changed the gradiant to stop for the orientation loss
+- Stable Diffusion
+    - Added the stable diffusion code based on Github repo [here](https://github.com/patil-suraj/stable-diffusion-jax.git)
 
 Project Organization
 ------------
